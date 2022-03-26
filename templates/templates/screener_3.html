@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Healthy Eating for Cancer Prevention{% endblock %}
+{% block content%}
+<div class = "container-fluid" id="background2">
+    <div class = "row">
+        <div class = "col text-center centered3 translucent">
+            <div class="centered-inner2">
+                <div>
+                    <form action="/processing" method="POST">
+                        <h5>In the past 7 days, how many days did you eat fruit (excluding juice)?</h5>
+                        <div class="left-aligned">
+                            <input type="radio" name="fruit_days" value="1">
+                            <label class="label-left">1 day</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="2">
+                            <label class="label-left">2 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="3">
+                            <label class="label-left">3 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="4">
+                            <label class="label-left">4 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="5">
+                            <label class="label-left">5 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="6">
+                            <label class="label-left">6 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="7">
+                            <label class="label-left">7 days</label>
+                            <br>
+                            <input type="radio" name="fruit_days" value="0">
+                            <label class="label-left">I did not eat fruit in the past 7 days</label>
+                            <input type="hidden" id="tracker" name="tracker" value=3>
+                        </div>
+                        <br>
+                        <button class="btn btn-outline-dark margin" type="submit">Submit</button> 
+                    </form>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 23%" aria-valuenow="3" aria-valuemin="0" aria-valuemax="13"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>                    
+
+        
+{% endblock %}

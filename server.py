@@ -17,6 +17,11 @@ def show_homepage():
     """Show homepage"""
     return render_template("homepage.html")
 
+@app.route("/users", methods=["POST"])
+def create_account():
+    """Create an account for new users."""
+    pass
+
 @app.route("/login", methods=["POST"])
 def log_in():
     """Existing user log in."""
@@ -24,10 +29,10 @@ def log_in():
     email = request.form.get("email")
     password = request.form.get("password")
     
-    user_exist = crud.get_user_by_email(email)
+    user_exist = helper.get_user_by_email(email)
 
     if user_exist:
-        checked_user = crud.check_user_password(email, password)
+        checked_user = helper.check_user_password(email, password)
         if checked_user:
             session['pkey'] = checked_user
             flash ("Success! You are logged in!")
@@ -37,6 +42,14 @@ def log_in():
         flash ("No match for email entered. Please create an account.")
     
     return redirect ("/reservation-form")
+
+@app.route("/user/<user_id>")
+def show_reservations_by_user():
+    """Show all reservations made by a user."""
+
+    reservations = helper.all_reservation_list()
+
+    return render_template("user.html", reservations = reservations)
 
 @app.route("/reservation-form")
 def show_reservation_form():
@@ -53,13 +66,6 @@ def make_reservation():
     """Make reservation. Assign a user to a slot."""
     pass
 
-@app.route("/user/<user_id>")
-def show_reservations_by_user():
-    """Show all reservations made by a user."""
-
-    reservations = helper.all_reservation_list()
-
-    return render_template("user.html", reservations = reservations)
 
 
 if __name__ == "__main__":

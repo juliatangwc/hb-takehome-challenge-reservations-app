@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class = "container-fluid" id=background>
+    <div class = "row">
+        <div class = "col text-center centered translucent">
+            <div class="centered-inner">
+                <h1>Welcome</h1>
+                <h2>Healthy Eating for Cancer Prevention</h2>
+                <br>
+                <form autocomplete="off">
+                    <button class = "btn btn-outline-dark margin" type="submit" value="new_user" formaction="/screener/0">New User</button>
+                    <button class = "btn btn-outline-dark margin" type="submit" value="existing_user" formaction="/login">Existing User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

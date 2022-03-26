@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Healthy Eating for Cancer Prevention{% endblock %}
+{% block content%}
+<div class = "container-fluid">
+    <div class = "row">
+        <div class = "col text-center">
+            <br>
+            <h2>Diversify Your Protein</h2>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col m-3">
+            <p>Protein is very important for the function and repair of cells.</p>
+            <p>It can be divided by the sources into animal (red and white meat) and plant-based protein.</p>
+            
+            <table>
+                <tr style="text-align:center">
+                    <th>Red Meat</th>
+                    <th>White Meat</th>
+                    <th>Plant-based Protein</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>Pork</li>
+                            <li>Beef</li>
+                            <li>Lamb</li>
+                        </ul>
+                    </td>
+                    <td style="vertical-align: top">
+                        <ul>
+                            <li>Chicken and other poultry</li>
+                            <li>Fish and other seafood</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Soy and products (such as tofu)</li>
+                            <li>Other legumes (such as black beans and chickpeas)</li>
+                            <li>Nuts (such as almonds and peanuts)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col m-3">
+            <p>Men only needs about 56g of protein per day while women only needs about 46g of protein per day. 
+               Without over avoidance, obtaining sufficient protein from a normal diet is very easy.</p>
+            <p>On the other hand, consuming too much red and processed meat (such as sausages, ham, canned meat) 
+                will increase the risk of some cancers.</p>
+            <p>Therefore, you are recommended to vary your protein source each week…</p>
+            <ul>
+                <li>Red meat for 1-2 times</li>
+                <li>Poultry for 1-2 times</li>
+                <li>Fish and seafood for 1-2 times</li>
+                <li>Legume for 1-2 times</li>
+                <li>Eggs for 1-2 times</li>
+            </ul>
+        </div>
+        <div class = "col m-3">
+            <table>
+                <tr>
+                    <th>Food Item</th>
+                    <th>Protein<br>(g per 100g*)</th>
+                </tr>
+                <tr>
+                    <td>Chicken</td>
+                    <td>30-35</td>
+                </tr>
+                <tr>
+                    <td>Beef</td>
+                    <td>30-35</td>
+                </tr>
+                <tr>
+                    <td>Pork</td>
+                    <td>30-35</td>
+                </tr>
+                <tr>
+                    <td>Fish</td>
+                    <td>20-25</td>
+                </tr>
+                <tr>
+                    <td>Egg</td>
+                    <td>10-15</td>
+                </tr>
+                <tr>
+                    <td>Milk</td>
+                    <td>3-5</td>
+                </tr>
+                <tr>
+                    <td>Yogurt</td>
+                    <td>4-6</td>
+                </tr>
+                <tr>
+                    <td>Legumes</td>
+                    <td>5-9</td>
+                </tr>
+                <tr>
+                    <td>Nuts</td>
+                    <td>14-20</td>
+                </tr>
+                <tr>
+                    <td colspan="2">*100g is about the size of your palm or 3oz</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col m-3">
+            <p>Consuming the right amount of protein from diverse sources can help maintain the balance of fat and 
+                calories, which is an integral part of a healthy diet.</p>
+        </div>
+    </div>         
+</div>
+<hr>
+<div class="container-fluid" id="quiz">
+    <div class = "row">
+        <div class = "col text-center">
+            <h3>Quiz</h3>
+            <h5>Choose all food items that you should limit or avoid eating.</h5>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col" id="root">
+        <script type="text/jsx" src="/static/js/module3.jsx"></script>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

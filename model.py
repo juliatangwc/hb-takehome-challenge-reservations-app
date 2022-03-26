@@ -15,48 +15,30 @@ class User(db.Model):
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
+    timeslot = db.relationship('Timeslot', back_populates="user")
+
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
-class Reservation(db.Model):
-    """A reservation."""
+class Timeslot(db.Model):
+    """A timeslot."""
 
-    __tablename__ = 'reservations'
+    __tablename__ = 'timeslots'
 
-    movie_id = db.Column(db.Integer,
+    timeslot_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    title = db.Column(db.String)
-    overview = db.Column(db.Text)
-    release_date = db.Column(db.DateTime)
-    poster_path = db.Column(db.String)
-
-    # ratings = a list of Rating objects
-
-    def __repr__(self):
-        return f'<Movie movie_id={self.movie_id} title={self.title}>'
-
-
-class Rating(db.Model):
-    """A movie rating."""
-
-    __tablename__ = 'ratings'
-
-    rating_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    score = db.Column(db.Integer)
-    movie_id = db.Column(db.Integer, db.ForeignKey("movies.movie_id"))
+    date = db.Column(db.DateTime)
+    time = db.Column(db.DateTime)                   
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
-    movie = db.relationship("Movie", backref="ratings")
-    user = db.relationship("User", backref="ratings")
+    user = db.relationship('User', back_populates="timeslot")
 
     def __repr__(self):
-        return f'<Rating rating_id={self.rating_id} score={self.score}>'
+        return f'<Timeslot date={self.date} time={self.time} user_id={self.user_id}>'
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///reservations", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

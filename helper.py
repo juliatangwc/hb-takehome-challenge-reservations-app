@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Movie, Rating, connect_to_db
+from model import db, User, Timeslot, connect_to_db
 
 
 def create_user(email, password):
@@ -10,10 +10,33 @@ def create_user(email, password):
 
     return user
 
-def all_users_list():
-    """Shows list of all users."""
+def get_user_by_email(email):
+    """Check if user with email exists.
+        If true, return user. 
+        If false, return None."""
+    
+    return User.query.filter(User.email == email).first()
 
-    return User.query.all()
+def check_user_password(email, password):
+    """If password entered matches password in databse, return True.
+        If password does not match, return False."""
+    
+    user = User.query.filter(User.email == email).first()
+
+    if user.password == password:
+        return user
+    else:
+        return False
+
+def show_all_reservation(user_id):
+    """Return all reservations made by user given user ID."""
+
+    return Timeslots.query.filter(Timeslot.user_id == user_id).all()
+
+
+###
+
+
 
 def get_user_by_id(user_id):
     """Return a user object by its ID"""
@@ -46,23 +69,9 @@ def rate_a_movie(user, movie, score):
 
     return rating
 
-def get_user_by_email(email):
-    """Check if user with email exists.
-        If true, return user. 
-        If false, return None."""
-    
-    return User.query.filter(User.email == email).first()
 
-def check_user_password(email, password):
-    """If password entered matches password in databse, return True.
-        If password does not  match, return False."""
-    
-    user = User.query.filter(User.email == email).first()
 
-    if user.password == password:
-        return user.user_id
-    else:
-        return False
+
         
 
 

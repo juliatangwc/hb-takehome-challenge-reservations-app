@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}All Reservations{{name}}{% endblock %}
+
+{% block body %}
+<h3>Please see all your melon tasting reservations below:</h3>
+<ol>
+    {% for reservation in reservations %}
+    <li>Date: {{reservation.date}}  Time:{{reservation.time}}</li>
+    {% endfor %}
+</ol>
+{% endblock %}

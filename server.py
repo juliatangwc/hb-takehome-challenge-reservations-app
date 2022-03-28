@@ -20,7 +20,24 @@ def show_homepage():
 @app.route("/users", methods=["POST"])
 def create_account():
     """Create an account for new users."""
-    pass
+    
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user_exist = helper.get_user_by_email(email)
+
+    if user_exist:
+        flash ("This email is already registered on our website. Please log in.")
+    else:
+        user = helper.create_user(email, password)
+        db.session.add(user)
+        db.session.commit()
+        flash ("Account created.")
+
+        user_id = user.user_id
+        session['user_id'] = user_id
+    
+    return redirect (f"/user/{user_id}")
 
 @app.route("/login", methods=["POST"])
 def log_in():
@@ -34,20 +51,21 @@ def log_in():
     if user_exist:
         checked_user = helper.check_user_password(email, password)
         if checked_user:
-            session['pkey'] = checked_user
+            user_id = checked_user.user_id
+            session['user_id'] = user_id
             flash ("Success! You are logged in!")
         else:
             flash ("Wrong password. Please try again.")
     else:
         flash ("No match for email entered. Please create an account.")
     
-    return redirect ("/reservation-form")
+    return redirect (f"/user/{user_id}")
 
 @app.route("/user/<user_id>")
 def show_reservations_by_user():
     """Show all reservations made by a user."""
 
-    reservations = helper.all_reservation_list()
+    reservations = helper.show_all_reservation(user_id)
 
     return render_template("user.html", reservations = reservations)
 
@@ -57,7 +75,7 @@ def show_reservation_form():
     return render_template("reservation-form.html")
 
 @app.route("/available")
-def show_available slots():
+def show_available_slots():
     """Show all available slots according to criteria given."""
     return render_template("available-timeslots.html")
 

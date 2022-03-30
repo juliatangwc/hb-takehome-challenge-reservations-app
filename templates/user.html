@@ -2,10 +2,14 @@
 {% block title %}All Reservations{{name}}{% endblock %}
 
 {% block body %}
+{% if reservations: %}
 <h3>Please see all your melon tasting reservations below:</h3>
 <ol>
     {% for reservation in reservations %}
     <li>Date: {{reservation.date}}  Time:{{reservation.time}}</li>
     {% endfor %}
 </ol>
+{% else: %}
+<h3>You don't have any current reservations. Make one now!</h3>
+{% endif %}
 {% endblock %}

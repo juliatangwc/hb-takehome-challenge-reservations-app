@@ -3,46 +3,33 @@
 import os
 import json
 from random import choice, randint
-from datetime import datetime
+from datetime import datetime, date, time, timedelta
 
-import crud
+import helper
 import model
 import server
 
-os.system("dropdb ratings")
-os.system('createdb ratings')
+os.system("dropdb reservations")
+os.system('createdb reservations')
 
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# Load movie data from JSON file
-with open('data/movies.json') as f:
-    movie_data = json.loads(f.read())
+#Create timeslots for the upcoming year
+timeslots_db = []
+start_date = date(2022, 1, 1)
+end_date = date(2023, 1, 1)
+delta = timedelta(days=1)
+while start_date < end_date:
+    date = start_date.strftime("%Y-%m-%d")
+    slots = [time(h, m).strftime('%H:%M') for h in range(0, 24) for m in (0,30)]
+    for slot in slots:
+        timeslot = helper.create_timeslots(date, slot)
+        timeslots_db.append(timeslot)
+    start_date += delta
 
-# Create movies, store them in list so we can use them
-# to create fake ratings later
-movies_in_db = []
-
-#movie_data = [{'overview': 'The near future, [...] search of the unknown.',
-#'poster_path': 'https://image.tmdb.org/t/p/original//xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg',
-#'release_date': '2019-09-20',
-#'title': 'Ad Astra'}......]
-
-for movie in movie_data:
-    # Get the title, overview, and poster_path from the movie
-    # dictionary. Then, get the release_date and convert it to a
-    # datetime object with datetime.strptime
-    title = movie['title']
-    overview = movie['overview']
-    poster_path = movie['poster_path']
-    release_date = datetime.strptime(movie['release_date'],'%Y-%m-%d')
-
-    # Create a movie here and append it to movies_in_db
-    new_movie = crud.create_movie(title, overview, release_date, poster_path)
-    movies_in_db.append(new_movie)
-
-#Add movies to SQLAlchemy and then commit
-model.db.session.add_all(movies_in_db)
+#Add timeslots to SQLAlchemy and then commit
+model.db.session.add_all(timeslots_db)
 model.db.session.commit()
 
 #Create 10 users
@@ -50,15 +37,8 @@ for n in range(10):
     email = f'user{n}@test.com'  # Voila! A unique email!
     password = 'test'
 
-    user = crud.create_user(email, password)
+    user = helper.create_user(email, password)
     model.db.session.add(user)
-    
-    # Create 10 ratings for the user
-    for x in range(10):
-        random_movie = choice(movies_in_db)
-        score = randint(1,5)
-        new_rating = crud.rate_a_movie(user, random_movie, score)
-        model.db.session.add(new_rating)
 
 model.db.session.commit()
     

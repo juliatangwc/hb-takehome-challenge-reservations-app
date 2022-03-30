@@ -28,8 +28,8 @@ class Timeslot(db.Model):
     timeslot_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    date = db.Column(db.DateTime)
-    time = db.Column(db.DateTime)                   
+    date = db.Column(db.String)
+    time = db.Column(db.String)                   
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     user = db.relationship('User', back_populates="timeslot")

@@ -2,7 +2,15 @@
 
 from model import db, User, Timeslot, connect_to_db
 
+### for seed.py
+def create_timeslots(date, time, user_id=None):
+    """Create and return a a new timeslot."""
 
+    timeslot = Timeslot(date=date, time=time, user_id=user_id)
+    
+    return timeslot
+
+### for server.py
 def create_user(email, password):
     """Create and return a new user."""
 

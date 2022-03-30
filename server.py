@@ -54,15 +54,16 @@ def log_in():
             user_id = checked_user.user_id
             session['user_id'] = user_id
             flash ("Success! You are logged in!")
+            return redirect (f"/user/{user_id}")
         else:
             flash ("Wrong password. Please try again.")
+            return redireect("/")
     else:
         flash ("No match for email entered. Please create an account.")
-    
-    return redirect (f"/user/{user_id}")
+        return redirect("/")
 
 @app.route("/user/<user_id>")
-def show_reservations_by_user():
+def show_reservations_by_user(user_id):
     """Show all reservations made by a user."""
 
     reservations = helper.show_all_reservation(user_id)

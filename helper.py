@@ -39,7 +39,7 @@ def check_user_password(email, password):
 def show_all_reservation(user_id):
     """Return all reservations made by user given user ID."""
 
-    return Timeslots.query.filter(Timeslot.user_id == user_id).all()
+    return Timeslot.query.filter(Timeslot.user_id == user_id).all()
 
 
 ###

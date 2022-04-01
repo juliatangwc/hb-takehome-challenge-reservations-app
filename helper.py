@@ -57,48 +57,7 @@ def get_timeslot_by_date_time(date, time):
     """Return a timeslot given a date and time"""
 
     return Timeslot.query.filter(Timeslot.date == date, Timeslot.time == time).first()
-
-
-
-###
-
-
-
-def get_user_by_id(user_id):
-    """Return a user object by its ID"""
-    return User.query.get(user_id)
-
-def create_movie(title, overview, release_date, poster_path):
-    """Create and return a new movie."""
-    
-    movie = Movie(title=title, overview=overview,
-                    release_date=release_date,
-                    poster_path=poster_path)
-    
-    return movie
-
-def all_movies_list():
-    """Shows list of all movies."""
-
-    return Movie.query.all()
-
-def get_movie_by_id(movie_id):
-    """Return a movie object by its ID"""
-    return Movie.query.get(movie_id)
-
-def rate_a_movie(user, movie, score):
-    """Create a new rating for a movie."""
-
-    rating = Rating(score = score,
-                    movie = movie,
-                    user = user)
-
-    return rating
-
-
-
-
-        
+       
 
 
 if __name__ == '__main__':

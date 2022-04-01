@@ -41,6 +41,24 @@ def show_all_reservation(user_id):
 
     return Timeslot.query.filter(Timeslot.user_id == user_id).all()
 
+def show_available_timeslots(date, start=None, end=None):
+    """Return all available timeslots given a date, start and end time"""
+    
+    if start and end:
+        return Timeslot.query.filter(Timeslot.date == date, Timeslot.time>start, Timeslot.time<end, Timeslot.user_id == None).all()
+    elif start and not end:
+        return Timeslot.query.filter(Timeslot.date == date, Timeslot.time>start, Timeslot.user_id == None).all()
+    elif end and not start:
+        return Timeslot.query.filter(Timeslot.date == date, Timeslot.time<end, Timeslot.user_id == None).all()
+    else:
+        return Timeslot.query.filter(Timeslot.date == date, Timeslot.user_id == None).all()
+
+def get_timeslot_by_date_time(date, time):
+    """Return a timeslot given a date and time"""
+
+    return Timeslot.query.filter(Timeslot.date == date, Timeslot.time == time).first()
+
+
 
 ###
 

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Available timeslots{% endblock %}
+
+{% block body %}
+{% if timeslots: %}
+<h3>Please see all available timeslots below:</h3>
+<ul>
+    {% for timeslot in timeslots %}
+    <li>Date: {{timeslot.date}}  Time:{{timeslot.time}} 
+        <form action="/reserve" method="POST">
+            <input type="hidden" id="date" name="date" value={{timeslot.date}}>
+            <input type="hidden" id="time" name="time" value={{timeslot.time}}>
+            <input type="submit" value="Choose this timeslot">
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else: %}
+<h3>There are no timeslots available on that day. Please try again later or try another date.</h3>
+{% endif %}
+<form action="/reservation-form">
+    <input type="submit" value="Try another date" />
+</form>
+{% endblock %}

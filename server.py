@@ -28,6 +28,7 @@ def create_account():
 
     if user_exist:
         flash ("This email is already registered on our website. Please log in.")
+        return redirect("/")
     else:
         user = helper.create_user(email, password)
         db.session.add(user)
@@ -36,8 +37,7 @@ def create_account():
 
         user_id = user.user_id
         session['user_id'] = user_id
-    
-    return redirect (f"/user/{user_id}")
+        return redirect (f"/user/{user_id}")
 
 @app.route("/login", methods=["POST"])
 def log_in():
@@ -78,12 +78,33 @@ def show_reservation_form():
 @app.route("/available")
 def show_available_slots():
     """Show all available slots according to criteria given."""
-    return render_template("available-timeslots.html")
+    
+    date = request.args.get("date")
+    start = request.args.get("start")
+    end = request.args.get("end")
+
+    print(date)
+    print(start)
+    print(end)
+
+    timeslots = helper.show_available_timeslots(date, start, end)
+
+    return render_template("available-timeslots.html", timeslots = timeslots)
 
 @app.route("/reserve", methods=["POST"])
 def make_reservation():
     """Make reservation. Assign a user to a slot."""
-    pass
+    
+    user_id = session["user_id"]
+    date = request.form.get("date")
+    time = request.form.get("time")
+    
+    timeslot = helper.get_timeslot_by_date_time(date, time)
+    timeslot.user_id = user_id
+    db.session.add(timeslot)
+    db.session.commit()   
+
+    return redirect (f"/user/{user_id}")
 
 
 

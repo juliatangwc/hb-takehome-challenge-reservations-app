@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Reservation Form{% endblock %}
+
+{% block body %}
+<h3>Book your next melon tasting!</h3>
+<h3>Tell us when you would like to come and we will show you available time slots.</h3>
+
+<form action="/available">
+<label for="date">Select a date:</label>
+
+<input type="date" id="date" name="date"
+       value="2022-01-01"
+       min="2022-01-01" max="2022-12-31" required>
+
+<p>Preferred time range:</p>
+<label for="start">From:</label>
+<input type="time" id="start" name="start"
+       min="00:00" max="23:59">
+<label for="end">To:</label>
+<input type="time" id="end" name="end"
+       min="00:00" max="23:59">
+
+<input type="submit" value="See available timeslots" />
+</form>
+    
+
+
+
+{% endblock %}

@@ -65,10 +65,18 @@ def log_in():
 @app.route("/user/<user_id>")
 def show_reservations_by_user(user_id):
     """Show all reservations made by a user."""
-
-    reservations = helper.show_all_reservation(user_id)
-
-    return render_template("user.html", reservations = reservations)
+    if session['user_id']:
+        print('session', session['user_id'], type(session['user_id']))
+        if session['user_id'] == int(user_id):
+            reservations = helper.show_all_reservation(user_id)
+            return render_template("user.html", reservations = reservations)
+        else:
+            flash("Access not allowed.")
+            correct_id = session['user_id']
+            return redirect(f"/user/{correct_id}")
+    else:
+        flash("Please login to view your reservations.")
+        return redirect("/")
 
 @app.route("/reservation-form")
 def show_reservation_form():

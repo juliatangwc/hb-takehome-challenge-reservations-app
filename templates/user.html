@@ -6,7 +6,18 @@
 <h3>Please see all your melon tasting reservations below:</h3>
 <ol>
     {% for reservation in reservations %}
-    <li>Date: {{reservation.date}}  Time:{{reservation.time}}</li>
+    <li>
+        Date: {{reservation.date}}  Time:{{reservation.time}}
+        <form method="POST">
+            <input type="hidden" id="date" name="date" value={{reservation.date}}>
+            <input type="hidden" id="time" name="time" value={{reservation.time}}>
+            <input type="submit" value="Edit" formaction="/edit"/>
+            <input type="submit" value="Cancel" 
+                onclick="return confirm('Are you sure you want to cancel this reservation?');"
+                formaction="/cancel">
+        </form>
+        
+    </li>
     {% endfor %}
 </ol>
 {% else: %}

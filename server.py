@@ -94,19 +94,46 @@ def show_available_slots():
 @app.route("/reserve", methods=["POST"])
 def make_reservation():
     """Make reservation. Assign a user to a slot."""
-    
+
     user_id = session["user_id"]
     date = request.form.get("date")
     time = request.form.get("time")
-    
+
+    existing_timeslot = helper.check_user_res_by_date(date, user_id)
+
+    if existing_timeslot:
+        flash(f"""You have an existing reservation on {existing_timeslot.date} at {existing_timeslot.time}. 
+        Only one reservation is allowed per day.""")
+        return redirect("/reservation-form")
+    else:
+        timeslot = helper.get_timeslot_by_date_time(date, time)
+        
+        if timeslot.user_id:
+            flash("Timeslot taken. Please choose again.")
+            return redirect(request.referrer)
+        else:
+            timeslot.user_id = user_id
+            db.session.add(timeslot)
+            db.session.commit()   
+            flash("Reservation made succesfully.")
+            return redirect (f"/user/{user_id}")
+
+@app.route("/edit", methods=["POST"])
+def edit_reservation():
+    pass
+
+@app.route("/cancel", methods=["POST"])
+def delete_reservation():
+    user_id = session["user_id"]
+    date = request.form.get("date")
+    time = request.form.get("time")
+
     timeslot = helper.get_timeslot_by_date_time(date, time)
-    timeslot.user_id = user_id
+    timeslot.user_id = None
     db.session.add(timeslot)
-    db.session.commit()   
-
-    return redirect (f"/user/{user_id}")
-
-
+    db.session.commit()
+    flash("Reservation cancelled.")
+    return redirect(request.referrer)
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

@@ -57,7 +57,11 @@ def get_timeslot_by_date_time(date, time):
     """Return a timeslot given a date and time"""
 
     return Timeslot.query.filter(Timeslot.date == date, Timeslot.time == time).first()
-       
+
+def check_user_res_by_date(date, user_id):
+    """Return timeslot if user has a reservation on given date. Else, return none."""
+    
+    return Timeslot.query.filter(Timeslot.date == date, Timeslot.user_id == user_id).first()  
 
 
 if __name__ == '__main__':

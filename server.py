@@ -143,6 +143,11 @@ def delete_reservation():
     flash("Reservation cancelled.")
     return redirect(request.referrer)
 
+@app.route("/logout")
+def log_out():
+    session.clear()
+    return redirect("/")
+
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
